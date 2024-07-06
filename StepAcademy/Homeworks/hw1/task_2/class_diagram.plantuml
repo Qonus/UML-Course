@@ -1,0 +1,19 @@
+@startuml
+class ATM {
+    +verifyPassword(password: String): boolean
+    +verifyAmount(amount: float): boolean
+    +dispenseMoney(amount: float): void
+}
+
+class Account {
+    -balance: float
+    +checkBalance(): float
+}
+
+class User {
+    -password: String
+}
+
+ATM -> Account
+ATM -> User
+@enduml

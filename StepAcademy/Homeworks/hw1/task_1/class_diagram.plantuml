@@ -1,0 +1,20 @@
+@startuml
+class FileWriter {
+    +writeToDisk(data: Data): boolean
+    +verifyDisk(data: Data): boolean
+}
+
+class Disk {
+    +hasEnoughSpace(size: int): boolean
+    +isDamaged(): boolean
+    +finalizeWrite(): void
+}
+
+class Data {
+    -content: String
+    +getSize(): int
+}
+
+FileWriter -> Disk
+FileWriter -> Data
+@enduml

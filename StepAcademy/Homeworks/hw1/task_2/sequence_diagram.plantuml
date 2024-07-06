@@ -1,0 +1,23 @@
+@startuml
+actor Customer
+participant ATM
+participant Account
+
+Customer -> ATM: enterPassword(password)
+ATM -> ATM: verifyPassword(password)
+alt Password incorrect
+    ATM --> Customer: reject
+else Password correct
+    ATM --> Customer: accept
+    Customer -> ATM: requestAmount(amount)
+    ATM -> Account: checkBalance()
+    alt Insufficient funds
+        Account --> ATM: false
+        ATM --> Customer: insufficientFunds
+    else Sufficient funds
+        Account --> ATM: true
+        ATM -> ATM: dispenseMoney(amount)
+        ATM --> Customer: dispense
+    end
+end
+@enduml

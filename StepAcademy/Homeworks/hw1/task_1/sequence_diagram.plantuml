@@ -1,0 +1,35 @@
+@startuml
+actor User
+participant FileWriter
+participant Disk
+participant Data
+
+User -> FileWriter: writeToDisk(data)
+FileWriter -> Disk: hasEnoughSpace(data.getSize())
+alt Insufficient space
+    Disk --> FileWriter: false
+    FileWriter -> Disk: finalizeWrite()
+    FileWriter -> Disk: hasEnoughSpace(data.getSize())
+    alt Space available after finalization
+        Disk --> FileWriter: true
+        FileWriter -> Disk: write(data)
+    else Still no space
+        Disk --> FileWriter: false
+    end
+else Sufficient space
+    Disk --> FileWriter: true
+    FileWriter -> Disk: write(data)
+end
+alt Disk damaged
+    Disk --> FileWriter: isDamaged()
+    Disk --> FileWriter: true
+else Disk not damaged
+    Disk --> FileWriter: false
+end
+FileWriter -> Disk: verifyDisk(data)
+alt Verification failed
+    Disk --> FileWriter: false
+else Verification successful
+    Disk --> FileWriter: true
+end
+@enduml

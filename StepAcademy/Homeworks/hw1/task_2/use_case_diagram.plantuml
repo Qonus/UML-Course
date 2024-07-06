@@ -1,0 +1,12 @@
+@startuml
+actor Customer
+
+usecase "Verify Password" as UC1
+usecase "Verify Amount" as UC2
+usecase "Dispense Money" as UC3
+
+Customer -> UC1
+UC1 -> UC2 : <<include>>
+UC2 -> UC3 : <<include>>
+
+@enduml

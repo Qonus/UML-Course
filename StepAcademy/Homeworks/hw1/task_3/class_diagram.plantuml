@@ -1,0 +1,32 @@
+@startuml
+class Thread {
+    +start(): void
+    +run(): void
+}
+
+class IOStream {
+    +open(): void
+    +close(): void
+}
+
+class FileStream extends IOStream {
+    +read(): byte[]
+    +write(data: byte[]): void
+}
+
+class NetworkStream extends IOStream {
+    +connect(): void
+    +disconnect(): void
+}
+
+class ThreadedIO {
+    +startThreadedRead(): void
+    +startThreadedWrite(): void
+}
+
+Thread <|-- ThreadedIO
+IOStream <|-- FileStream
+IOStream <|-- NetworkStream
+ThreadedIO *-- FileStream
+ThreadedIO *-- NetworkStream
+@enduml
