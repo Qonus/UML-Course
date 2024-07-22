@@ -1,0 +1,96 @@
+
+
+
+1st task:
+
+@startuml
+start
+:Insert Card;
+:Enter Password;
+if (Password Verified?) then (yes)
+  :Enter Amount;
+  if (Amount Valid?) then (yes)
+    :Dispense Money;
+    :Take Card and Money;
+    stop
+  else (no)
+    :Insufficient Funds;
+    :Take Card;
+    stop
+  endif
+else (no)
+  :Invalid Password;
+  :Take Card;
+  stop
+endif
+@enduml
+
+
+
+2nd task:
+
+@startuml
+start
+:Read coefficients a, b, c;
+:Calculate discriminant (D = b^2 - 4ac);
+if (D > 0) then (two real roots)
+  :Calculate roots x1, x2;
+  :Display x1, x2;
+  stop
+else if (D == 0) then (one real root)
+  :Calculate root x;
+  :Display x;
+  stop
+else (D < 0) then (complex roots)
+  :Calculate complex roots;
+  :Display complex roots;
+  stop
+endif
+@enduml
+
+
+
+3rd task:
+
+@startuml
+start
+:Enter Book Index;
+if (Index Confirmed?) then (yes)
+  if (Book Available?) then (yes)
+    if (Can be Checked Out?) then (yes)
+      :Check Out Book;
+      stop
+    else (no)
+      :Handle in Reading Room Only;
+      stop
+    endif
+  else (no)
+    :Book is On Hand, Cannot be Issued;
+    stop
+  endif
+else (no)
+  :Index Not Confirmed, Cannot Issue Book;
+  stop
+endif
+@enduml
+
+
+
+4th task:
+
+@startuml
+[*] --> Enrolled
+Enrolled --> TakingCourse
+TakingCourse --> LabWork
+LabWork : Must complete 3 lab works
+LabWork --> Project : Completed 3 Lab Works
+Project : Must pass term project
+Project --> Exam : Passed term project
+Exam : Must pass the exam
+Exam --> Completed : Passed exam
+Completed --> [*]
+
+LabWork --> Enrolled : Failed
+Project --> Enrolled : Failed
+Exam --> Enrolled : Failed
+@enduml
