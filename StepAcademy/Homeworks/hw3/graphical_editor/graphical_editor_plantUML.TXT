@@ -1,0 +1,78 @@
+@startuml
+
+abstract class Document <<abstract>> {
+  +open(): void
+  +save(): void
+  +saveAs(newName: String): void
+  +print(): void
+  +close(): void
+}
+
+class GraphicalDocument extends Document {
+  +open(): void
+  +save(): void
+  +saveAs(newName: String): void
+  +print(): void
+  +close(): void
+  +applyTool(tool: ImageTool): void
+  -imageData: ImageData
+}
+
+abstract class DocumentCreator <<abstract>> {
+  +createDocument(): Document
+}
+
+class GraphicalDocumentCreator extends DocumentCreator {
+  +createDocument(): Document
+}
+
+class DocumentEditor {
+  -document: Document
+  +newDocument(creator: DocumentCreator): void
+  +openDocument(): void
+  +saveDocument(): void
+  +saveDocumentAs(newName: String): void
+  +printDocument(): void
+  +closeDocument(): void
+}
+
+class GraphicalDocumentEditor extends DocumentEditor {
+  +applyTool(tool: ImageTool): void
+  +exportAs(format: String): void
+}
+
+package ImageTools <<Rectangle>> {
+  abstract class ImageTool <<abstract>> {
+    +apply(imageData: ImageData): ImageData
+  }
+  
+  class CropTool extends ImageTool {
+    +apply(imageData: ImageData): void
+  }
+  
+  class ResizeTool extends ImageTool {
+    +apply(imageData: ImageData): void
+  }
+  
+  class FilterTool extends ImageTool {
+    +apply(imageData: ImageData): void
+  }
+}
+
+class ImageData {
+  -data: byte[]
+  +getData(): byte[]
+  +setData(data: byte[]): void
+}
+
+
+DocumentEditor ..> DocumentCreator
+DocumentEditor o-- Document
+GraphicalDocumentEditor o-[hidden]- GraphicalDocument
+GraphicalDocumentEditor .[hidden].> GraphicalDocumentCreator
+GraphicalDocument o-- ImageData
+GraphicalDocument ..> ImageTool
+ImageTool ..> ImageData
+GraphicalDocumentEditor ..> ImageTool
+
+@enduml

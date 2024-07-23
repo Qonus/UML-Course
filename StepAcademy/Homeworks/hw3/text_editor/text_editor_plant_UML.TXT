@@ -1,0 +1,46 @@
+@startuml
+
+abstract class Document <<abstract>> {
+  +open(): void
+  +save(): void
+  +saveAs(newName: String): void
+  +print(): void
+  +close(): void
+}
+
+class TextDocument extends Document {
+  +open(): void
+  +save(): void
+  +saveAs(newName: String): void
+  +print(): void
+  +close(): void
+  +editText(content: String): void
+  +getText(): String
+  -content: String
+}
+
+abstract class DocumentCreator <<abstract>> {
+  +createDocument(): Document
+}
+
+class TextDocumentCreator extends DocumentCreator {
+  +createDocument(): Document
+}
+
+class DocumentEditor {
+  -document: Document
+  +newDocument(creator: DocumentCreator): void
+  +openDocument(): void
+  +saveDocument(): void
+  +saveDocumentAs(newName: String): void
+  +printDocument(): void
+  +closeDocument(): void
+  +editDocument(content: String): void
+  +getDocumentText(): String
+}
+
+Document <|-[hidden]- TextDocument
+DocumentEditor o-- Document
+DocumentEditor ..> DocumentCreator
+
+@enduml
