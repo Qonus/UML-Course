@@ -35,12 +35,15 @@ class DocumentEditor {
   +saveDocumentAs(newName: String): void
   +printDocument(): void
   +closeDocument(): void
-  +editDocument(content: String): void
-  +getDocumentText(): String
 }
 
-Document <|-[hidden]- TextDocument
+class TextDocumentEditor extends DocumentEditor {
+  +editText(content: String): void
+  +getText(): String
+}
+
 DocumentEditor o-- Document
 DocumentEditor ..> DocumentCreator
+TextDocumentEditor o-- TextDocument
 
 @enduml
